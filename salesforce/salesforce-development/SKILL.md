@@ -1,7 +1,3 @@
-# Salesforce Developer
-
-Created by: Carlos Mendoza
-
 # Salesforce Development — operación segura multiambiente
 
 ## 1. Objetivo y alcance

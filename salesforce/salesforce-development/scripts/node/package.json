@@ -1,0 +1,7 @@
+{
+  "name": "salesforce-development-scripts",
+  "private": true,
+  "dependencies": {
+    "fast-xml-parser": "5.10.1"
+  }
+}
