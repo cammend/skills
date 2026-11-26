@@ -1,4 +1,11 @@
-# Salesforce Solution Architect
+---
+name: salesforce-solution-architect
+description: Define soluciones Salesforce y prepara requisitos, criterios de aceptación y planes técnicos para aprobación.
+---
+
+# Arquitectura de soluciones Salesforce
+
+Define con el usuario la solución Salesforce y prepara el plan que guiará su implementación.
 
 ## Propósito y alcance
 
@@ -12,16 +19,16 @@ Acordar con el usuario la definición de la solución, el plan de trabajo o ambo
 
 ## Plan de trabajo y aprobación
 
-1. Traducir la solución acordada en tareas ordenadas. Para cada tarea, indicar qué requisito atiende, qué resultado debe entregar, de qué depende y cómo se verificará que está completa.
+1. Traducir la solución acordada en tareas ordenadas. Para cada tarea, indicar su ID, el requisito que atiende, los componentes previstos, las dependencias, el resultado esperado y cómo verificar los criterios de aceptación.
 2. Registrar las decisiones pendientes y señalar cuáles impiden iniciar alguna tarea. Revisar que el plan cubra los requisitos acordados y que los criterios de aceptación permitan validar el resultado.
-3. Presentar la definición o el plan para revisión. Marcar el entregable como `APROBADO` solo con aprobación explícita. Si se solicita revisar un acuerdo aprobado, confirmar con el usuario su reapertura y registrar los cambios en la bitácora. Entregar el plan aprobado a `salesforce-development` para su implementación.
+3. Presentar la definición o el plan para revisión. Marcar el entregable como `APROBADO` solo con aprobación explícita. Si se solicita revisar un acuerdo aprobado, confirmar con el usuario su reapertura y registrar los cambios en la bitácora. Entregar el plan aprobado a [Desarrollo Salesforce](../salesforce-development/SKILL.md) para su implementación.
 
 ## Documentación de la feature
 
-Guardar los documentos nuevos en `feature/<nombre-feature>/documentacion/`, siguiendo la convención de nombres de `git-workflow`.
+Guardar los documentos nuevos en `feature/<nombre>/documentacion/`, siguiendo la convención de nombres de [Git y GitHub](../git-workflow/SKILL.md).
 
 ```
-feature/<nombre-feature>/documentacion/
+feature/<nombre>/documentacion/
 ├── definicion.md
 ├── analisis-salesforce.md
 ├── plan-trabajo.md
@@ -31,6 +38,6 @@ feature/<nombre-feature>/documentacion/
 - `definicion.md` describe la necesidad, el alcance, los requisitos, los criterios de aceptación, la solución acordada y su estado de aprobación.
 - `analisis-salesforce.md` recoge los hallazgos, las fuentes, las alternativas, los riesgos y las preguntas abiertas.
 - `plan-trabajo.md` describe las tareas, su orden, sus dependencias y los resultados esperados.
-- `bitacora.md` registra las decisiones, los cambios de alcance y las aprobaciones. Durante la implementación, `salesforce-development` registra sus ajustes en `feature/<nombre-feature>/desarrollo/bitacora.md`.
+- `bitacora.md` registra las decisiones, los cambios de alcance y las aprobaciones. Durante la implementación, `salesforce-development` registra sus ajustes en `feature/<nombre>/desarrollo/bitacora.md`.
 
 Crear los documentos que correspondan al encargo. Si la feature ya tiene alguno, actualizarlo en su ruta existente para evitar duplicados.

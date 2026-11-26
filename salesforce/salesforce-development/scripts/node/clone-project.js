@@ -1,3 +1,25 @@
+/**
+ * Prepara un proyecto DX temporal para DEV o UAT con los miembros del manifiesto
+ * y sus variantes por ambiente. Usa SF CLI para conversiones locales.
+ *
+ * node clone-project.js [nombre] [raíz-del-proyecto]
+ * node clone-project.js <nombre> <raíz-del-proyecto> --deploy-rapido
+ * node clone-project.js --resolver-ruta <archivo> [carpeta-de-búsqueda]
+ *
+ * La raíz predeterminada es el directorio actual. Si se omite el nombre,
+ * se obtiene de la rama feature/<nombre> en esa raíz. La preparación lee
+ * SF_PROJECT_NAME y SF_ENV del .env, sfdx-project.json y package.xml.
+ * El modo --deploy-rapido lee package-fast-deploy.xml en su lugar.
+ *
+ * Crea una carpeta con prefijo paquete- en .tmp/<nombre>/deploy/<ambiente>/
+ * y devuelve
+ * por stdout un JSON con directory, manifest y targetOrg. La tabla de orígenes
+ * sale por stderr. Si falla la preparación, elimina el paquete parcial.
+ * El modo --resolver-ruta devuelve un arreglo JSON ordenado de rutas absolutas.
+ * Busca el nombre exacto desde force-app por defecto, con PowerShell en Windows
+ * o rg en los demás sistemas. Este modo solo lee archivos locales.
+ */
+
 const { execFileSync, spawnSync } = require('node:child_process');
 const { Console } = require('node:console');
 const {

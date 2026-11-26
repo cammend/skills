@@ -1,3 +1,23 @@
+/**
+ * Valida el manifiesto completo de una mejora con RunSpecifiedTests.
+ *
+ * node validate.js [nombre]
+ *
+ * Ejecutar desde la raíz del proyecto Salesforce. Si se omite el nombre,
+ * se obtiene de la rama feature/<nombre>. Lee SF_PROJECT_NAME y SF_ENV del
+ * .env y toma feature/<nombre>/manifest/package.xml. Para DEV y UAT prepara
+ * un paquete con clone-project.js. Para PRD usa el proyecto raíz.
+ *
+ * Detecta clases de prueba Apex del manifiesto. Si no hay ninguna, requiere
+ * SF_VALIDATION_TEST_CLASS con el nombre de una prueba existente en la org.
+ * Muestra el destino, manifiesto, pruebas y comando. Enter inicia la validación
+ * y Ctrl+C cancela. Validar en PRD requiere autorización previa.
+ *
+ * Guarda la respuesta JSON de SF CLI bajo .tmp/<nombre>/deploy/<ambiente>/,
+ * dentro del paquete preparado cuando corresponde. Emite un resumen JSON
+ * con targetOrg, tests, report, jobId y status. No aplica Quick Deploy.
+ */
+
 const { spawnSync } = require('node:child_process');
 const { mkdir, readFile, realpath, writeFile } = require('node:fs/promises');
 const { basename, dirname, join } = require('node:path');

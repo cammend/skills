@@ -1,3 +1,22 @@
+/**
+ * Genera un informe de permisos por perfil mediante consultas de solo lectura
+ * a una org autenticada en Salesforce CLI.
+ *
+ * node profile-snapshot.js <alias-org> "Perfil A;Perfil B" [archivo.txt]
+ *
+ * El alias es obligatorio y explícito. Indicar los nombres de perfiles
+ * separados por punto y coma en un único argumento entre comillas.
+ * El archivo es opcional. Usar un nombre simple para guardar el informe en
+ * .tmp/perfiles/<alias-org>/<ejecución>/ del proyecto. Si se omite el nombre,
+ * el script lo genera con el alias, perfil y fecha. Si hay varios perfiles,
+ * añade un sufijo a cada informe.
+ *
+ * El texto incluye permisos de sistema, objetos y campos y accesos a clases,
+ * páginas Visualforce y otras entidades. El registro consultas.jsonl de la
+ * misma carpeta contiene consultas, recuentos y diagnósticos. El informe sirve
+ * para revisión de accesos y no es metadato de despliegue.
+ */
+
 const fs = require('node:fs');
 const path = require('node:path');
 const { execFileSync } = require('node:child_process');
@@ -12,6 +31,12 @@ if (!orgAlias || profileNames.some(name => !name)) {
     console.error(
         'Uso: node profile-snapshot.js <org-alias> "Perfil A;Perfil B" [archivo.txt]'
     );
+    process.exit(1);
+}
+
+if (outputName && (/[\\/:]/.test(outputName)
+        || ['.', '..', 'consultas.jsonl'].includes(outputName.toLowerCase()))) {
+    console.error('Indica un nombre de archivo simple y distinto de consultas.jsonl.');
     process.exit(1);
 }
 
@@ -44,10 +69,12 @@ const timestamp = [
     `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`,
     `${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`
 ].join('_');
-const queryLogPath = path.resolve(
-    __dirname, '..', '..', '.tmp',
-    `profile-queries-${orgAlias.replace(/[^a-zA-Z0-9_-]/g, '_')}_${timestamp}_${process.pid}.jsonl`
+const outputRoot = path.resolve(
+    __dirname, '..', '..', '.tmp', 'perfiles',
+    orgAlias.replace(/[^a-zA-Z0-9_-]/g, '_'),
+    `${timestamp}_${process.pid}`
 );
+const queryLogPath = path.join(outputRoot, 'consultas.jsonl');
 let currentProfile = null;
 let queryNumber = 0;
 
@@ -74,7 +101,7 @@ function getOutputPath(profileName, index) {
         fileName = `profile-${safeName(orgAlias + ' ' + profileName)}_${timestamp}${suffix ? `_${index + 1}` : ''}.txt`;
     }
 
-    return path.resolve(__dirname, '..', '..', './.tmp', fileName);
+    return path.join(outputRoot, fileName);
 }
 
 function sf(args) {

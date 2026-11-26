@@ -1,3 +1,19 @@
+/**
+ * Aplica un despliegue puntual en DEV o UAT con NoTestRun.
+ *
+ * node fast-deploy.js [nombre] [--yes]
+ *
+ * Ejecutar desde la raíz del proyecto Salesforce. Si se omite el nombre,
+ * se obtiene de la rama feature/<nombre>. Lee SF_PROJECT_NAME y SF_ENV del
+ * .env. Usa clone-project.js para preparar package-fast-deploy.xml y
+ * consulta Organization.IsSandbox antes de iniciar el despliegue.
+ *
+ * Muestra el destino, manifiesto y comando. Enter confirma y Ctrl+C cancela.
+ * --yes omite la confirmación interactiva una vez obtenida la autorización
+ * aplicable. UAT requiere autorización explícita de alcance y destino.
+ * La salida del despliegue proviene de SF CLI y se conserva su código de salida.
+ */
+
 const { spawnSync } = require('node:child_process');
 const { readFile, realpath } = require('node:fs/promises');
 const { join } = require('node:path');
